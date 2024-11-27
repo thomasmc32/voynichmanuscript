@@ -29,9 +29,9 @@ public class Voynich {
                 "otar chdy dytchdy";
 
         // Clean the ciphertext (remove spaces and punctuation, make lowercase)
-        String processedText = cipherText.toLowerCase().replaceAll("[^a-z]", "");
+        String ptext = cipherText.toLowerCase().replaceAll("[^a-z]", "");
         System.out.println("\ni couldn't find a version of the manuscript that was translated using the little table on wikipedia you can see what" +
-                "im talking about on the image labeled 'what i used.jpeg' so i had to write out my whole page (page 94) by hand and compare each letter they" +
+                "im talking about on the image labeled 'what i used.jpeg' so i had to write out my whole page (page 94) by hand and compare each letter they " +
                 "used with the english alphebet. i used frequency analysis to get how frequent they use each letter then compared them to our most used." +
                 "when i did the analysis i got nothing back so i thought maybe it was shifted as well. so i did brute force with the ceasear cipher and looked at each one " +
                 "to see if any made sense. this still got me nothing back. i then thought maybe if i do it in italian since the origin is from italy maybe that would work" +
@@ -42,7 +42,7 @@ public class Voynich {
 
         // Perform frequency analysis to map common letters
         System.out.println("\nFrequency Analysis Results:");
-        String frequencyDecryptedText = performFrequencyAnalysis(processedText);
+        String frequencyDecryptedText = performFrequencyAnalysis(ptext);
 
         // Perform Caesar cipher brute-force decryption on the frequency analysis result
         System.out.println("\nBrute Force Attempts on Frequency Analysis:");
