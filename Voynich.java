@@ -5,7 +5,10 @@
  * Date Developed: 11/24/24
  * Last Date Changed: 11/26/24
  */
-
+//websites i used to get the manuscript, some info, and the table to translate to english letters \/
+//https://collections.library.yale.edu/catalog/2002046
+//https://en.m.wikipedia.org/wiki/Voynich_manuscript#/media/File%3AVoynich_EVA.svg
+//https://en.m.wikipedia.org/wiki/Voynich_manuscript
 import java.util.*;
 
 public class Voynich {
@@ -16,6 +19,7 @@ public class Voynich {
      *
      * @param args Command-line arguments.
      */
+
     public static void main(String[] args) {
         // Ciphertext to be deciphered
         String cipherText = "Tchiuy oFaiis chejaiin dxeedy qoPchegay keodaiiu otayaiin oar\n" +
@@ -28,7 +32,7 @@ public class Voynich {
                 "yty qokaiub ykal chdy qoky osaib chy kaidy daiy\n" +
                 "otar chdy dytchdy";
 
-        // Clean the ciphertext (remove spaces and punctuation, make lowercase)
+        // "Clean" the ciphertext (remove spaces and make lowercase)
         String ptext = cipherText.toLowerCase().replaceAll("[^a-z]", "");
         System.out.println("\ni couldn't find a version of the manuscript that was translated using the little table on wikipedia you can see what" +
                 "im talking about on the image labeled 'what i used.jpeg' so i had to write out my whole page (page 94) by hand and compare each letter they " +
@@ -41,10 +45,12 @@ public class Voynich {
                 //^^ this is just me explaining my thought process i was gonna turn in a seperate document but didnt want you to have to open anything extra
 
         // Perform frequency analysis to map common letters
+        //https://github.com/joeoakes/javaBruteForceFreqAnalysis
         System.out.println("\nFrequency Analysis Results:");
         String frequencyDecryptedText = performFrequencyAnalysis(ptext);
-
+//
         // Perform Caesar cipher brute-force decryption on the frequency analysis result
+        //Security Hashing, HMAC, Brute Force, AES, TLS Presentation Joe Oaks  (BRUTE FORCE TO BE EXACT)
         System.out.println("\nBrute Force Attempts on Frequency Analysis:");
         for (int shift = 0; shift < 26; shift++) {
             String decrypted = caesarDecrypt(frequencyDecryptedText, shift);
@@ -59,6 +65,7 @@ public class Voynich {
      * @param shift The shift amount for the cipher.
      * @return The decrypted text.
      */
+    //https://github.com/joeoakes/javaCaesarCipher \/
     public static String caesarDecrypt(String text, int shift) {
         StringBuilder result = new StringBuilder();
 
@@ -80,6 +87,7 @@ public class Voynich {
      * @param text The text to analyze.
      * @return A decrypted version of the text based on frequency analysis.
      */
+    //    \/ https://github.com/joeoakes/javaBruteForceFreqAnalysis/blob/main/CaesarCipherFrequencyAnalysis.java
     public static String performFrequencyAnalysis(String text) {
         // Common English letter frequencies, most frequent first
         char[] englishLetterFrequency = {'e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z'};
@@ -100,7 +108,7 @@ public class Voynich {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
-        // Try mapping the most common letters in the text to common English letters
+        // mapping the most common letters in the text to common English letters
         System.out.println("\nVoynich to English Leters using Frequency Analysis:");
         Map<Character, Character> mapping = new HashMap<>();
         for (int i = 0; i < sortedFrequencies.size(); i++) {
