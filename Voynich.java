@@ -119,6 +119,7 @@ public class Voynich {
         }
 
         // Decrypt the text using the frequency map
+        //ngl chatgpt helped me on this part
         System.out.println("\nDecrypted Text (Frequency Analysis):");
         StringBuilder decryptedText = new StringBuilder();
         for (char c : text.toCharArray()) {
