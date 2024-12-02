@@ -1,0 +1,20 @@
+//common words in the English language provided by Mr.ChatGPT
+the
+and
+of
+to
+a
+in
+that
+is
+it
+was
+he
+for
+on
+are
+as
+with
+his
+they
+at

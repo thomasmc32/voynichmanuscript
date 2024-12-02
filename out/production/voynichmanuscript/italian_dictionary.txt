@@ -1,0 +1,21 @@
+//common words in the Italian language provided by Mr.ChatGPT
+e
+di
+che
+il
+la
+a
+è
+per
+un
+con
+non
+una
+sono
+i
+si
+ma
+lo
+più
+le
+mi

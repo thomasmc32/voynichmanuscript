@@ -1,0 +1,17 @@
+//common words in the Latin language provided by Mr.ChatGPT
+et
+in
+est
+non
+ad
+hoc
+sed
+qui
+quod
+cum
+sunt
+ex
+quae
+pro
+te
+me
