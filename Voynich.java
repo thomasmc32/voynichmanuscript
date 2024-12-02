@@ -3,6 +3,9 @@ import java.util.*;
 
 public class Voynich {
 
+    // Map to hold dictionaries for different languages
+    private static final Map<String, Set<String>> DICTIONARIES = new HashMap<>();
+
     /**
      * Main method to run the program.
      * It processes the ciphertext, analyzes letter frequencies, and applies decryption methods
@@ -12,6 +15,17 @@ public class Voynich {
      */
     public static void main(String[] args) {
         String cipherText = "";
+//Java_Systems_Integration Flat Files.pptx JOE OAKS---https://github.com/joeoakes/javaBruteForceDictionary/
+        // Load dictionaries for supported languages
+        try {
+            loadDictionary("English", "english_dictionary.txt");
+            loadDictionary("Italian", "italian_dictionary.txt");
+            loadDictionary("Latin", "latin_dictionary.txt");
+            loadDictionary("Spanish", "spanish_dictionary.txt");
+        } catch (IOException e) {
+            System.err.println("Error loading dictionaries: " + e.getMessage());
+            return;
+        }
 
         // Read ciphertext from a flat file
         try {
@@ -57,6 +71,10 @@ public class Voynich {
         for (int shift = 0; shift < 26; shift++) {
             String decrypted = caesarDecrypt(frequencyDecryptedText, shift);
             System.out.println("Shift " + shift + ": " + decrypted);
+
+            if (checkWithDictionary(language, decrypted)) {
+                System.out.println("Potential match found with shift " + shift + ": " + decrypted);
+            }
         }
     }
 
@@ -67,6 +85,7 @@ public class Voynich {
      * @param shift The shift amount for the cipher.
      * @return The decrypted text.
      */
+    //https://github.com/joeoakes/javaCaesarCipher---JOE OAKS
     public static String caesarDecrypt(String text, int shift) {
         StringBuilder result = new StringBuilder();
 
@@ -90,6 +109,7 @@ public class Voynich {
      * @param language           The name of the language being analyzed.
      * @return A decrypted version of the text based on frequency analysis.
      */
+    //https://github.com/joeoakes/javaBruteForceFreqAnalysis--JOE OAKS java_Security_Brute_Force_AES (3).pptx---JOE OAKS
     public static String performFrequencyAnalysis(String text, char[] languageFrequencies, String language) {
         // Count how often each letter appears
         Map<Character, Integer> frequencyMap = new HashMap<>();
@@ -108,12 +128,10 @@ public class Voynich {
         }
 
         // Map the most common letters in the text to the language frequencies
-        System.out.println("\nVoynich to " + language + " Letters using Frequency Analysis:");
         Map<Character, Character> mapping = new HashMap<>();
         for (int i = 0; i < sortedFrequencies.size(); i++) {
             if (i < languageFrequencies.length) {
                 mapping.put(sortedFrequencies.get(i).getKey(), languageFrequencies[i]);
-                System.out.println(sortedFrequencies.get(i).getKey() + " -> " + languageFrequencies[i]);
             }
         }
 
@@ -127,10 +145,55 @@ public class Voynich {
             }
         }
 
-        String result = decryptedText.toString();
-        System.out.println("\nDecrypted Text (Frequency Analysis):");
-        System.out.println(result);
+        return decryptedText.toString();
+    }
 
-        return result;
+    /**
+     * Loads a dictionary for a given language from a file.
+     *
+     * @param language The language of the dictionary.
+     * @param filePath The path to the dictionary file.
+     * @throws IOException If there is an error reading the file.
+     */
+    //Chat gpt helped and https://github.com/joeoakes/javaBruteForceDictionary/ helped
+    public static void loadDictionary(String language, String filePath) throws IOException {
+        Set<String> words = new HashSet<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String word;
+            while ((word = reader.readLine()) != null) {
+                words.add(word.toLowerCase());
+            }
+        }
+        DICTIONARIES.put(language, words);
+        System.out.println(language + " dictionary loaded with " + words.size() + " words.");
+    }
+
+    /**
+     * Checks if a decrypted text contains any words from the dictionary for a given language.
+     *
+     * @param language The language to use for the dictionary.
+     * @param text     The decrypted text to check.
+     * @return True if the text contains valid dictionary words, false otherwise.
+     */
+    //https://github.com/joeoakes/javaBruteForceDictionary/----JOE OAKS
+    public static boolean checkWithDictionary(String language, String text) {
+        Set<String> dictionary = DICTIONARIES.get(language);
+        if (dictionary == null) return false;
+
+        String[] words = text.split("\\s+"); // Split text into words
+        boolean foundMatch = false;
+
+        for (String word : words) {
+            if (dictionary.contains(word)) {
+                foundMatch = true; // A match was found
+                break;
+            }
+        }
+
+        if (!foundMatch) {
+            System.out.println("No words found in dictionary for " + language + ".");
+        }
+
+        return foundMatch;
     }
 }

@@ -1,0 +1,17 @@
+//common words in the Spanish language provided by Mr.ChatGPT
+que
+de
+no
+a
+la
+el
+es
+y
+en
+lo
+un
+por
+me
+una
+te
+se
