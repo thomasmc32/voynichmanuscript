@@ -15,7 +15,7 @@ public class Voynich {
      */
     public static void main(String[] args) {
         String cipherText = "";
-//Java_Systems_Integration Flat Files.pptx JOE OAKS---https://github.com/joeoakes/javaBruteForceDictionary/
+        //Java_Systems_Integration Flat Files.pptx JOE OAKS---https://github.com/joeoakes/javaBruteForceDictionary/
         // Load dictionaries for supported languages
         try {
             loadDictionary("English", "english_dictionary.txt");
@@ -127,15 +127,21 @@ public class Voynich {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
-        // Map the most common letters in the text to the language frequencies
+        // Compare the most frequent characters to the language frequencies
         Map<Character, Character> mapping = new HashMap<>();
+        System.out.println("\nFrequency Comparison for " + language + ":");
+        System.out.printf("%-10s %-10s%n", "Voynich", "Compared to " + language + ":");
+
         for (int i = 0; i < sortedFrequencies.size(); i++) {
             if (i < languageFrequencies.length) {
-                mapping.put(sortedFrequencies.get(i).getKey(), languageFrequencies[i]);
+                char cipherChar = sortedFrequencies.get(i).getKey();
+                char mappedChar = languageFrequencies[i];
+                mapping.put(cipherChar, mappedChar);
+                System.out.printf("%-10c %-10c%n", cipherChar, mappedChar);
             }
         }
 
-        // Decrypt the text using the frequency map
+        // Decrypt the text using the frequency mapping
         StringBuilder decryptedText = new StringBuilder();
         for (char c : text.toCharArray()) {
             if (mapping.containsKey(c)) {
