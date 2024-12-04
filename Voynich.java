@@ -76,12 +76,12 @@ public class Voynich {
     }
 
     public static void processLanguage(String language, String text, double[] expectedFrequencies) {
-        System.out.println("\n=== Processing for " + language + " ===");
+        System.out.println("\n=== " + language + " ===");
 
         String bestGuess = performFrequencyAnalysis(text, expectedFrequencies, language);
 
-        System.out.println("\nBest Guess (Frequency Analysis): " + bestGuess);
-        System.out.println("\nBrute Force Attempts:");
+        System.out.println("\nFrequency Analysis Best Guess: " + bestGuess);
+        System.out.println("\nBrute Force:");
 
         boolean matchFound = false;
         for (int shift = 0; shift < 26; shift++) {

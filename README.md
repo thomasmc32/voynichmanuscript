@@ -19,3 +19,6 @@ dictionaries are detected
 - Java 22 
 - IntelliJ IDEA
 - Oracle OpenJDK 22.0.2-aarch64
+
+### *What Does Potential Match mean?*
+- Potential Match means that the cipher has a lot of common letter patterns and could hide real words from each respective language even though its not clear
