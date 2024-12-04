@@ -6,14 +6,14 @@
  * Last Date Changed: 12/4/24
  *
  * Citations:
- *https://github.com/joeoakes/javaBruteForceFreqAnalysis/
- *https://github.com/joeoakes/javaBruteForceDictionary/
- *https://github.com/joeoakes/javaConstitutionManuscript/
- *Java_Systems_Integration Flat Files.pptx
- *https://en.m.wikipedia.org/wiki/Voynich_manuscript
- *https://en.m.wikipedia.org/wiki/Voynich_manuscript#/media/File%3AVoynich_EVA.svg
- *https://collections.library.yale.edu/catalog/2002046
- *https://chatgpt.com/
+ * https://github.com/joeoakes/javaBruteForceFreqAnalysis/
+ * https://github.com/joeoakes/javaBruteForceDictionary/
+ * https://github.com/joeoakes/javaConstitutionManuscript/
+ * Java_Systems_Integration Flat Files.pptx
+ * https://en.m.wikipedia.org/wiki/Voynich_manuscript
+ * https://en.m.wikipedia.org/wiki/Voynich_manuscript#/media/File%3AVoynich_EVA.svg
+ * https://collections.library.yale.edu/catalog/2002046
+ * https://chatgpt.com/
  */
 
 import java.io.*;
