@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Voynich {
 
-    // Map to hold dictionaries for different languages https://github.com/joeoakes/javaBruteForceFreqAnalysis/
+    // Map to hold dictionaries for different languages
     private static final Map<String, Set<String>> DICTIONARIES = new HashMap<>();
 
     // English letter frequencies (percentages)
@@ -14,12 +14,12 @@ public class Voynich {
             1.974, 0.074
     };
 
-    // Italian letter frequencies (percentages)
+    // Updated Italian letter frequencies (percentages)
     private static final double[] ITALIAN_FREQUENCIES = {
-            11.745, 11.745, 11.281, 9.832, 6.883, 6.367, 5.623, 5.308,
-            5.136, 4.501, 3.736, 3.011, 2.515, 2.506, 2.097, 1.644,
-            1.171, 0.927, 0.877, 0.432, 0.052, 0.034, 0.032, 0.014,
-            0.012, 0.000
+            11.745, 0.927, 4.501, 3.736, 11.281, 1.644, 1.171, 0.734,
+            10.143, 0.011, 0.009, 6.013, 2.512, 6.883, 9.832, 3.056,
+            0.505, 6.367, 4.981, 5.623, 3.011, 1.838, 0.033, 0.007,
+            0.013, 0.003
     };
 
     // Latin letter frequencies (percentages)
@@ -38,18 +38,10 @@ public class Voynich {
             0.070, 0.050
     };
 
-    /**
-     * Main method to run the program.
-     * It processes the ciphertext, analyzes letter frequencies, and applies decryption methods
-     * for English, Latin, Spanish, and Italian.
-     *
-     * @param args Command-line arguments.
-     */
     public static void main(String[] args) {
         String cipherText = "";
 
-        // Load dictionaries for supported languages https://github.com/joeoakes/javaBruteForceDictionary/
-       //https://github.com/joeoakes/javaConstitutionManuscript
+        // Load dictionaries
         try {
             loadDictionary("English", "english_dictionary.txt");
             loadDictionary("Italian", "italian_dictionary.txt");
@@ -60,9 +52,8 @@ public class Voynich {
             return;
         }
 
-        // Read ciphertext from a flat file
+        // Read ciphertext
         try {
-            //Java_Systems_Integration Flat Files.pptx
             File file = new File("vciphertext.txt");
             Scanner fileScanner = new Scanner(file);
             StringBuilder fileContent = new StringBuilder();
@@ -74,55 +65,38 @@ public class Voynich {
             cipherText = fileContent.toString().toLowerCase().replaceAll("[^a-z\\s]", ""); // Preserve spaces
         } catch (FileNotFoundException e) {
             System.err.println("Error: File 'vciphertext.txt' not found");
-            return; // Exit the program if the file is not found
+            return;
         }
 
-        // "Clean" the ciphertext (preserving spaces and converting to lowercase)
-        String ptext = cipherText;
-
-        // Perform frequency analysis and decryption for each language
-        processLanguage("English", ptext, ENGLISH_FREQUENCIES);
-        processLanguage("Italian", ptext, ITALIAN_FREQUENCIES);
-        processLanguage("Latin", ptext, LATIN_FREQUENCIES);
-        processLanguage("Spanish", ptext, SPANISH_FREQUENCIES);
+        // Process each language
+        processLanguage("English", cipherText, ENGLISH_FREQUENCIES);
+        processLanguage("Italian", cipherText, ITALIAN_FREQUENCIES);
+        processLanguage("Latin", cipherText, LATIN_FREQUENCIES);
+        processLanguage("Spanish", cipherText, SPANISH_FREQUENCIES);
     }
 
-    /**
-     * Processes the ciphertext for a given language.
-     * It performs frequency analysis and Caesar cipher brute force.
-     *
-     * @param language          The name of the language being processed.
-     * @param text              The cleaned ciphertext.
-     * @param expectedFrequencies The expected frequency percentages for the language.
-     */
     public static void processLanguage(String language, String text, double[] expectedFrequencies) {
         System.out.println("\n=== Processing for " + language + " ===");
 
-        System.out.println("\nFrequency Analysis Results:");
         String bestGuess = performFrequencyAnalysis(text, expectedFrequencies, language);
-        System.out.println("\nBest Guess (Frequency Analysis): " + bestGuess);
 
+        System.out.println("\nBest Guess (Frequency Analysis): " + bestGuess);
         System.out.println("\nBrute Force Attempts:");
+
+        boolean matchFound = false;
         for (int shift = 0; shift < 26; shift++) {
             String decrypted = caesarDecrypt(bestGuess, shift);
-            System.out.println("Shift " + shift + ": " + decrypted);
-
             if (checkWithDictionary(language, decrypted)) {
                 System.out.println("Potential match found with shift " + shift + ": " + decrypted);
+                matchFound = true;
             }
+        }
+
+        if (!matchFound) {
+            System.out.println("No matches found for " + language);
         }
     }
 
-    /**
-     * Performs frequency analysis and calculates observed frequencies.
-     * Compares observed frequencies to expected frequencies.
-     *
-     * @param text               The text to analyze.
-     * @param expectedFrequencies The expected frequencies for the language.
-     * @param language           The name of the language.
-     * @return A decrypted version of the text based on frequency analysis.
-     */
-    //
     public static String performFrequencyAnalysis(String text, double[] expectedFrequencies, String language) {
         int[] observedCounts = new int[26];
         int totalLetters = 0;
@@ -139,7 +113,7 @@ public class Voynich {
             observedFrequencies[i] = 100.0 * observedCounts[i] / totalLetters;
         }
 
-        System.out.printf("%-10s %-10s %-10s%n", "Letter", "Voynich%", language + "%");
+        System.out.printf("%-10s %-10s %-10s%n", "Letter", "Observed%", language + "%");
         for (int i = 0; i < 26; i++) {
             System.out.printf("%-10c %-10.2f %-10.2f%n", (char) ('a' + i), observedFrequencies[i], expectedFrequencies[i]);
         }
@@ -147,14 +121,6 @@ public class Voynich {
         return decryptUsingChiSquare(text, observedFrequencies, expectedFrequencies);
     }
 
-    /**
-     * Decrypts text using Chi-Square analysis to find the best match.
-     *
-     * @param text               The text to decrypt.
-     * @param observedFrequencies Observed letter frequencies.
-     * @param expectedFrequencies Expected letter frequencies.
-     * @return The decrypted text with the best Chi-Square score.
-     */
     public static String decryptUsingChiSquare(String text, double[] observedFrequencies, double[] expectedFrequencies) {
         String bestDecryption = "";
         double lowestChiSquare = Double.MAX_VALUE;
@@ -172,14 +138,6 @@ public class Voynich {
         return bestDecryption;
     }
 
-    /**
-     * Calculates the Chi-Square statistic for the decrypted text.
-     *
-     * @param text               The decrypted text.
-     * @param expectedFrequencies Expected letter frequencies.
-     * @return The Chi-Square score.
-     */
-//https://github.com/joeoakes/javaFrequencyAnalysis and ChatGPT
     public static double calculateChiSquare(String text, double[] expectedFrequencies) {
         int[] observedCounts = new int[26];
         int totalLetters = 0;
@@ -195,22 +153,20 @@ public class Voynich {
         for (int i = 0; i < 26; i++) {
             double observed = observedCounts[i];
             double expected = totalLetters * expectedFrequencies[i] / 100;
-            chiSquare += Math.pow(observed - expected, 2) / expected;
+            if (expected > 0) {
+                chiSquare += Math.pow(observed - expected, 2) / expected;
+            }
         }
 
         return chiSquare;
     }
 
-    /**
-     * Decrypts text using a Caesar cipher shift.
-     */
-    //https://github.com/joeoakes/javaBruteForceFreqAnalysis/
     public static String caesarDecrypt(String text, int shift) {
         StringBuilder result = new StringBuilder();
 
         for (char c : text.toCharArray()) {
             if (Character.isLetter(c)) {
-                char base = 'a'; // All letters are treated as lowercase
+                char base = 'a';
                 char decryptedChar = (char) ((c - base - shift + 26) % 26 + base);
                 result.append(decryptedChar);
             } else {
@@ -220,10 +176,6 @@ public class Voynich {
         return result.toString();
     }
 
-    /**
-     * Loads a dictionary for a given language from a file.
-     */
-    //https://github.com/joeoakes/javaBruteForceDictionary/
     public static void loadDictionary(String language, String filePath) throws IOException {
         Set<String> words = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -236,9 +188,6 @@ public class Voynich {
         System.out.println(language + " dictionary loaded with " + words.size() + " words.");
     }
 
-    /**
-     * Checks if a decrypted text contains any words from the dictionary for a given language.
-     */
     public static boolean checkWithDictionary(String language, String text) {
         Set<String> dictionary = DICTIONARIES.get(language);
         if (dictionary == null) return false;
