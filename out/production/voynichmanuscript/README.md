@@ -20,5 +20,41 @@ dictionaries are detected
 - IntelliJ IDEA
 - Oracle OpenJDK 22.0.2-aarch64
 
+
 ### *What Does Potential Match mean?*
 - Potential Match means that the cipher has a lot of common letter patterns and could hide real words from each respective language even though its not clear
+# Captures
+### Page 94r (Page I Used)
+![](capture/Voynich Manuscript 94r page i used.png)
+#### Brute For Potential Match Spanish
+![](capture/Brute For Potential Match Spanish.png)
+#### Brute Force Potential Match for English
+![](capture/Brute Force Potential Match for English.png)
+#### Brute Force Potential Match for Italian
+![](capture/Brute Force Potential Match for Italian.png)
+#### Brute Force Potential Match for Latin
+![](capture/Brute Force Potential Match for Latin.png)
+#### Examples of Handwriting Each Line on iPad
+![](capture/examples of handwriting each line on ipad.jpeg)
+#### Freq Analysis for English (best guess)
+![](capture/Freq Analysis for English best guess.png)
+#### Freq Analysis for Italian (best guess)
+![](capture/Freq Analysis for Italian best guess.png)
+#### Freq Analysis for Latin (best guess)
+![](capture/Freq Analysis for Latin best guess.png)
+#### Freq Analysis for Spanish (best guess)
+![](capture/Freq Analysis for Spanish best guess.png)
+#### Handwriting manuscript page
+![](capture/handwriting manuscript page.jpeg)
+#### Percentage Comparison between letters in Voynich and English
+![](capture/Percentage Comparison between letters in Voynich and English.png)
+#### Percentage Comparison between letters in Voynich and Italian
+![](capture/Percentage Comparison between letters in Voynich and Italian.png)
+#### Percentage Comparison between letters in Voynich and Latin
+![](capture/Percentage Comparison between letters in Voynich and Latin.png)
+#### Percentage Comparison between letters in Voynich and Spanish
+![](capture/Percentage Comparison between letters in Voynich and Spanish.png)
+#### Showing the Dictionaries are loaded and Ready
+![](capture/Showing the Dictionaries are loaded and Ready.png)
+#### What i used to Translate
+![](capture/what i used.jpeg)
