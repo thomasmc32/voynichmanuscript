@@ -26,6 +26,12 @@ dictionaries are detected
 # Captures
 ### Page 94r (Page I Used)
 ![](capture/Voynich Manuscript 94r page i used.png)
+### Page 95r (Page I Used)
+![](capture/Page 95r.png)
+### Page 53v (Page I Used)
+![](capture/Voynich manuscript page 53v.png)
+### Page 44v (Page I Used)
+![](capture/Voynich 44v.png)
 #### Brute For Potential Match Spanish
 ![](capture/Brute For Potential Match Spanish.png)
 #### Brute Force Potential Match for English
